@@ -32,18 +32,19 @@ public class UserController {
         List<User> userList= userService.selectUserByName(uname);
         boolean isRight=false;
         int id=0;
+        String power="";
         for (User u:userList) {
             if(SHA.equals(pwd,u.getPwd()))
             {
                 isRight=true;
                 id=u.getId();
+                power=u.getPower();
                 break;
-            }else {
-                System.out.println(u.getUname()+':'+u.getPwd());
             }
         }
         map.put("contains",isRight);
         map.put("id",id);
+        map.put("power",power);
         return map;
     }
 
