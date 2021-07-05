@@ -41,4 +41,17 @@ public interface GoodsDao {
      * @return 返回查询到的商品列表
      */
     List<Goods> selectGoodsByType(@Param("type")String type);
+
+    /**
+     * 分页查询所有商品信息
+     * @param page 偏移数，一页显示六个
+     * @return 分页查询商品列表
+     */
+    List<Goods> getGoods(@Param("page") int page);
+
+    /**
+     * 计算用户总数
+     * @return 用户总数
+     */
+    int countAllGoods();
 }

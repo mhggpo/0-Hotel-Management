@@ -16,8 +16,16 @@
     </update>
 
     <delete id="deleteReserve">
-        delete from reserve
-        where reserve.id=#{reserveId}
+        update reserve
+        set status='已取消'
+        where id = #{reserveId};
+        update room
+        set status='空房'
+        where id=(
+            select room
+            from roomregister
+            where id = (select roomregister from reserve where id = #{reserveId})
+        );
     </delete>
 
     <select id="selectReserveById" resultType="Reserve">
@@ -30,25 +38,40 @@
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
             join room on roomRegister.room=room.id
-        where room.type=#{roomType}
+        where room.type LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectReserveByFloor" resultType="Reserve">
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
             join room on roomRegister.room=room.id
-        where room.floor=#{floor}
+        where room.floor LIKE CONCAT('%',#{floor},'%')
     </select>
 
     <select id="selectReserveByStatus" resultType="Reserve">
         select *
         from reserve
-        where reserve.status=#{reserveStatus}
+        where reserve.status LIKE CONCAT('%',#{reserveStatus},'%')
     </select>
 
     <select id="selectReserveByName" resultType="Reserve">
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
-        where roomregister.guestName=#{reserveGuestName}
+        where roomregister.guestName LIKE CONCAT('%',#{reserveGuestName},'%')
+    </select>
+
+    <select id="getReserve" resultType="com.zero.pojo.Reserve">
+        select * from reserve
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllReserves" resultType="java.lang.Integer">
+        select count(*) from reserve
+    </select>
+
+    <select id="selectReserveByRoomId" resultType="com.zero.pojo.Reserve">
+        select *
+        from reserve r,roomregister rg,room ro
+        where r.roomRegister=rg.id and rg.room=ro.id and ro.id=#{roomId}
     </select>
 </mapper>

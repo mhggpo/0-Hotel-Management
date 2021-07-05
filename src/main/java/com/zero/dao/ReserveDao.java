@@ -27,7 +27,7 @@ public interface ReserveDao {
      * @param id 预定编号
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateReserve(Integer id);
+    int UpdateReserve(@Param("id")Integer id);
 
     /**
      *通过预定单号查询预定
@@ -64,4 +64,24 @@ public interface ReserveDao {
      * @return 返回查询到的预定列表
      */
     List<Reserve> selectReserveByName(@Param("reserveGuestName")String reserveGuestName);
+
+    /**
+     * 分页查询所有预定信息
+     * @param page 偏移数，一页显示六个
+     * @return 分页查询预定列表
+     */
+    List<Reserve> getReserve(@Param("page") int page);
+
+    /**
+     * 计算预定总数
+     * @return 预定总数
+     */
+    int countAllReserves();
+
+    /**
+     * 通过房间编号查询预定信息
+     * @param roomId 房间编号
+     * @return 查询到的预定信息列表
+     */
+    List<Reserve> selectReserveByRoomId(@Param("roomId") Integer roomId);
 }

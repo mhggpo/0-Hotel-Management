@@ -27,7 +27,7 @@ public interface RoomDao {
      * @param room 客房对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateRoom(Room room);
+    int updateRoom(Room room);
 
     /**
      *通过编号查询客房
@@ -69,5 +69,30 @@ public interface RoomDao {
      * @param room 客房对象
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoom(Room room);
+    List<Room> selectRoom(@Param("room") Room room);
+
+    /**
+     * 分页查询所有客房信息
+     * @param page 页数，一页显示六个
+     * @return 分页查询客房列表
+     */
+    List<Room> getRoom(@Param("page") int page);
+
+    /**
+     * 计算房间总数
+     * @return 房间总数
+     */
+    int countAllRooms();
+
+    /**
+     * 计算客房类型总数
+     * @return 类型总数
+     */
+    List<String> countRoomTypes();
+
+    /**
+     * 计算楼层类型总数
+     * @return 楼层类型总数
+     */
+    List<String> countFloorTypes();
 }

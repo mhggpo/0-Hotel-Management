@@ -21,24 +21,24 @@
 
     <select id="selectRoomByType" resultType="Room" parameterType="RoomType">
         select * from room r
-        where type=#{roomType}
+        where type LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectRoomByStatus" resultType="Room">
         select * from room r
-        where status=#{roomStatus}
+        where status LIKE CONCAT('%',#{roomStatus},'%')
     </select>
 
     <select id="selectRoomByFloor" resultType="Room">
         select * from room r
-        where floor=#{floor}
+        where floor LIKE CONCAT('%',#{floor},'%')
     </select>
 
     <select id="selectRoomByPrice" resultType="Room">
         select * from room r
         <where>
             <if test="roomPrice!=null">
-                or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
+                or r.standardPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.vipPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.memberPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.discountPrice LIKE CONCAT('%',#{room.standardPrice},'%')
             </if>
             <if test="roomPrice=null">
                 1=0
@@ -56,22 +56,42 @@
             <if test="room.type!=null and room.type!=''">
                 and r.type=#{room.type}
             </if>
-            <if test="room.floor!=null and room.floor.name!=''">
-                and r.floor=#{room.floor.name}
+            <if test="room.floor!=null and room.floor!=''">
+                and r.floor=#{room.floor}
             </if>
             <if test="room.status!=null and room.status!=''">
                 and r.`status`=#{room.status}
+            </if>
+            <if test="room.standardPrice!=null">
+                and (r.standardPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.vipPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.memberPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.discountPrice LIKE CONCAT('%',#{room.standardPrice},'%'))
             </if>
         </if>
         </where>
     </select>
 
-    <update id="UpdateRoom">
+    <update id="updateRoom">
         update room r
         set type=#{type},floor=#{floor},status=#{status},
             standardPrice=#{standardPrice},discountPrice=#{discountPrice},
             memberPrice=#{memberPrice},vipPrice=#{vipPrice},remarks=#{remarks}
         where id=#{id}
     </update>
+
+    <select id="getRoom" resultType="com.zero.pojo.Room">
+        select * from room
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllRooms" resultType="java.lang.Integer">
+        select count(*) from room
+    </select>
+
+    <select id="countRoomTypes" resultType="java.lang.String">
+        select DISTINCT name from roomtype
+    </select>
+
+    <select id="countFloorTypes" resultType="java.lang.String">
+        select DISTINCT name from floor
+    </select>
 
 </mapper>

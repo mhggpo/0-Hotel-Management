@@ -27,6 +27,15 @@
     <select id="selectUserByName" resultType="User">
         select *
         from user u
-        where u.uname=#{userName}
+        where u.uname like CONCAT('%',#{userName},'%')
+    </select>
+
+    <select id="getUser" resultType="com.zero.pojo.User">
+        select * from user
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllUsers" resultType="java.lang.Integer">
+        select count(*) from user
     </select>
 </mapper>

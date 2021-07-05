@@ -14,13 +14,29 @@
 
     <update id="updateFloor">
         update floor f
-        set f.remarks=#{remarks}
-        where name=#{name}
+        <set>
+            <if test="floor.remarks!=null and floor.remarks neq ''">
+                f.remarks=#{floor.remarks},
+            </if>
+            <if test="floor.name!=null and floor.name neq ''">
+                f.name=#{floor.name},
+            </if>
+        </set>
+        where f.name=#{target}
     </update>
 
     <select id="selectFloor" resultType="Floor">
         select *
         from floor f
-        where f.name=#{name}
+        where f.name LIKE CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="getFloor" resultType="com.zero.pojo.Floor">
+        select * from floor
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllFloors" resultType="java.lang.Integer">
+        select count(*) from floor
     </select>
 </mapper>

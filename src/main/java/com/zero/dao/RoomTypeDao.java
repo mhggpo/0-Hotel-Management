@@ -32,4 +32,24 @@ public interface RoomTypeDao {
      * @return 一个带有所有房间类型的List
      */
     List<RoomType> selectAllRoomType();
+
+    /**
+     * 查寻客房类型
+     * @param name 客房类型名
+     * @return 返回查询到的客房类型列表
+     */
+    List<RoomType> selectRoomType(@Param("name") String name);
+
+    /**
+     * 分页查询所有客房类型信息
+     * @param page 偏移数，一页显示六个
+     * @return 分页查询客房信息列表
+     */
+    List<RoomType> getRoomType(@Param("page") int page);
+
+    /**
+     * 计算客房类型总数
+     * @return 客房类型总数
+     */
+    int countAllRoomTypes();
 }
