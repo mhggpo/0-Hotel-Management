@@ -91,6 +91,14 @@ public interface CheckInService {
      */
     List<CheckIn> selectCheckInByUser(@Param("guest") String guest);
 
+    /**
+     *根据入住人id查询入住客房信息
+     * @param guestId 入住人id
+     * @return 返回查询到的客房信息列表
+     */
+    List<CheckIn> selectCheckInByGuestId(@Param("guest") Integer guestId);
+
+
 //    /**
 //     * 预定转入住
 //     * @param id 预定id
@@ -119,4 +127,18 @@ public interface CheckInService {
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
     int changeRoom(@Param("checkInId") Integer checkInId,@Param("roomId") Integer roomId);
+
+    /**
+     * 删除入住信息
+     * @param checkInId 入住信息Id
+     * @param roomId 房间号
+     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
+     */
+    int delCheckIn(@Param("checkInId")Integer checkInId,@Param("roomId")Integer roomId);
+
+    /**
+     * 统计入住信息总数
+     * @return 入住信息总数
+     */
+    int countAllCheckIn();
 }

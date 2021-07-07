@@ -22,10 +22,10 @@ public interface GoodsTypeService {
 
     /**
      * 修改商品类型
-     * @param id 商品id
+     * @param goodsType 商品类型
      * @return 0表明修改失败
      */
-    int updateGoodsType(Integer id);
+    int updateGoodsType(GoodsType goodsType);
 
     /**
      * 查询所有商品类型
@@ -33,6 +33,25 @@ public interface GoodsTypeService {
      */
     List<GoodsType> selectAllGoodsType();
 
+    /**
+     * 通过商品name查询商品类型
+     * @param name 商品类型name
+     * @return 返回查询到的商品列表
+     */
+    List<GoodsType> selectGoodsTypeByName(@Param("name") String name);
+
+    /**
+     * 通过商品类型id查询商品类型
+     * @param id 商品类型id
+     * @return 查询到的商品类型
+     */
+    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
+
+    /**
+     * 分页查询商品类型
+     * @param page 页数
+     * @return 该页商品
+     */
     List<GoodsType> getGoodsType(Integer page);
 
     /**

@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Goods {
+@NoArgsConstructor
+public class GuestHistory {
     private Integer id;
     private String name;
-    private Integer typeid;
-    private Double price;
-    private String unit;
-    private String remarks;
+    private String guestIdType;
+    private String guestId;
+    private String tel;
 }
